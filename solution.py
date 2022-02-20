@@ -37,6 +37,13 @@ class Ball:
         self.x_vel = self.MAX_VEL
         self.y_vel = 0
 
+    def draw(self,win):
+        pygame.draw.circle(win,self.COLOUR,(self.x,self.y),self.radius)
+    def move(self):
+        self.x += self.x_vel
+        self.y += self.y_vel
+
+def draw(win,paddles,ball): # this function draws everything that we see on the screen 
     win.fill(BLACK)
     for paddle in paddles:
         paddle.draw(win)
