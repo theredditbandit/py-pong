@@ -10,7 +10,7 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 PADDLE_WIDTH, PADDLE_HEIGHT = 20,100
 BALL_RADIUS = 7
-
+SCORE_FONT = pygame.font.SysFont("comicsans",50)
 class Paddle:
     COLOUR = WHITE
     VEL = 4 # velocity with which the paddles will move 
@@ -43,8 +43,12 @@ class Ball:
         self.x += self.x_vel
         self.y += self.y_vel
 
-def draw(win,paddles,ball): # this function draws everything that we see on the screen 
+def draw(win,paddles,ball,left_score,right_score): # this function draws everything that we see on the screen 
     win.fill(BLACK)
+    left_score_text = SCORE_FONT.render(f"{left_score}", 1, WHITE)
+    right_score_text = SCORE_FONT.render(f"{right_score}", 1, WHITE)
+    win.blit(left_score_text, (WIDTH//4 - left_score_text.get_width()//2, 20))
+    win.blit(right_score_text, (WIDTH * (3/4) -right_score_text.get_width()//2, 20))
     for paddle in paddles:
         paddle.draw(win)
     
@@ -101,9 +105,13 @@ def main(): # event / game loop
     left_paddle = Paddle(10,HEIGHT//2-PADDLE_HEIGHT//2,PADDLE_WIDTH,PADDLE_HEIGHT)
     right_paddle = Paddle(WIDTH - 10 - PADDLE_WIDTH,HEIGHT//2-PADDLE_HEIGHT//2,PADDLE_WIDTH,PADDLE_HEIGHT)
     ball = Ball(WIDTH//2,HEIGHT//2,BALL_RADIUS)
+    left_score = 0
+    right_score = 0
+
+
     while run: 
         clock.tick(FPS) # regulates the speed of the while loop
-        draw(WIN,[left_paddle,right_paddle],ball)
+        draw(WIN,[left_paddle,right_paddle],ball,left_score,right_score)
         for event in pygame.event.get(): # this will get all the events that occour
             if event.type == pygame.QUIT:
                 run = False
@@ -112,6 +120,11 @@ def main(): # event / game loop
         handle_paddle_movement(keys,left_paddle,right_paddle)
         ball.move()
         handle_collision(ball,left_paddle,right_paddle)
+
+        if ball.x < 0:
+            right_score +1
+        elif ball.x > WIDTH:
+            left_score +=1
     pygame.quit()
 
 if __name__ == '__main__':
