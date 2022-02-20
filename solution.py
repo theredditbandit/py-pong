@@ -9,6 +9,7 @@ FPS = 60 # storing consstant variables as capital names
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 PADDLE_WIDTH, PADDLE_HEIGHT = 20,100
+BALL_RADIUS = 7
 
 class Paddle:
     COLOUR = WHITE
@@ -25,9 +26,17 @@ class Paddle:
             self.y -=self.VEL
         else:
             self.y += self.VEL
+class Ball:
+    MAX_VEL = 5
+    COLOUR = WHITE
 
+    def __init__(self,x,y,radius):
+        self.x = x
+        self.y = y
+        self.radius = radius 
+        self.x_vel = self.MAX_VEL
+        self.y_vel = 0
 
-def draw(win,paddles): # this function draws everything that we see on the screen 
     win.fill(BLACK)
     for paddle in paddles:
         paddle.draw(win)
@@ -37,7 +46,7 @@ def draw(win,paddles): # this function draws everything that we see on the scree
         if i%2 == 1:
             continue
         pygame.draw.rect(win,WHITE,(WIDTH//2-5,i,10,HEIGHT//20))
-
+    ball.draw(win)
     
     pygame.display.update()
 
@@ -57,16 +66,17 @@ def main(): # event / game loop
     clock = pygame.time.Clock()
     left_paddle = Paddle(10,HEIGHT//2-PADDLE_HEIGHT//2,PADDLE_WIDTH,PADDLE_HEIGHT)
     right_paddle = Paddle(WIDTH - 10 - PADDLE_WIDTH,HEIGHT//2-PADDLE_HEIGHT//2,PADDLE_WIDTH,PADDLE_HEIGHT)
-
+    ball = Ball(WIDTH//2,HEIGHT//2,BALL_RADIUS)
     while run: 
         clock.tick(FPS) # regulates the speed of the while loop
-        draw(WIN,[left_paddle,right_paddle])
+        draw(WIN,[left_paddle,right_paddle],ball)
         for event in pygame.event.get(): # this will get all the events that occour
             if event.type == pygame.QUIT:
                 run = False
                 break
         keys = pygame.key.get_pressed()
         handle_paddle_movement(keys,left_paddle,right_paddle)
+        ball.move()
     pygame.quit()
 
 if __name__ == '__main__':
