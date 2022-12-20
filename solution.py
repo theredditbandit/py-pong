@@ -1,4 +1,3 @@
-# from turtle import left, width
 import pygame 
 pygame.init()
 
@@ -108,26 +107,23 @@ def main(): # event / game loop
     left_score = 0
     right_score = 0
 
-
-    while run: 
-        clock.tick(FPS) # regulates the speed of the while loop
-        draw(WIN,[left_paddle,right_paddle],ball,left_score,right_score)
-        for event in pygame.event.get(): # this will get all the events that occour
-            if event.type == pygame.QUIT:
-                run = False
-                break
+    while run:
+        clock.tick(FPS)
         keys = pygame.key.get_pressed()
-        handle_paddle_movement(keys,left_paddle,right_paddle)
-        ball.move()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run  = False
         handle_collision(ball,left_paddle,right_paddle)
-
-        if ball.x < 0:
-            right_score +1
-        elif ball.x > WIDTH:
-            left_score +=1
+        handle_paddle_movement(keys,left_paddle,right_paddle)
+        if ball.x + ball.radius >= WIDTH:
+            left_score+=1
+            ball = Ball(WIDTH//2,HEIGHT//2,BALL_RADIUS)
+            ball.x_vel *=-1
+        elif ball.x - ball.radius <= 0:
+            right_score+=1
+            ball = Ball(WIDTH//2,HEIGHT//2,BALL_RADIUS)
+            ball.x_vel *=-1
+        ball.move()
+        draw(WIN,[left_paddle,right_paddle],ball,left_score,right_score)
     pygame.quit()
-
-if __name__ == '__main__':
-    main()
-
-
+main()
