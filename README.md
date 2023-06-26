@@ -20,7 +20,7 @@ This is a fork of the Py-Pong game by [theredditbandit](https://github.com/there
 
 To run the game, navigate to the project directory and run the following command:
 ```shell
-python py-pong.py
+python solution.py
 ```
 
 ## Gameplay
