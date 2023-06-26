@@ -1,6 +1,6 @@
 # Py-Pong Game
 
-This is a fork of the Py-Pong game by [Username](https://github.com/theredditbandit) - Description of the contribution.
+This is a fork of the Py-Pong game by [theredditbandit](https://github.com/theredditbandit) - Description of the contribution.
 , with updates to fix some of the biggest bugs.
 
 ## Installation
@@ -40,4 +40,4 @@ The following updates have been made to fix the biggest bugs in the game:
 
 ## Credits
 
-This game is based on the original Py-Pong game, created by the [Pygame Community](https://www.pygame.org/).
+This game is based on the original Py-Pong game, created by the one and only [theredditbandit](https://github.com/theredditbandit). His repository link can be found here: [py-pong]([https://github.com/theredditbandit/py-pong]) 
