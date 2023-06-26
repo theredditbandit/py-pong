@@ -1,7 +1,6 @@
 # Py-Pong Game
 
-This is a fork of the Py-Pong game by [theredditbandit](https://github.com/theredditbandit) - Description of the contribution.
-, with updates to fix some of the biggest bugs.
+This is a fork of the Py-Pong game by [theredditbandit](https://github.com/theredditbandit) - Description of the contribution, with updates to fix some of the biggest bugs which are updated in his repository [py-pong](https://github.com/theredditbandit/py-pong).
 
 ## Installation
 
