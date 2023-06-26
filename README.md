@@ -40,4 +40,4 @@ The following updates have been made to fix the biggest bugs in the game:
 
 ## Credits
 
-This game is based on the original Py-Pong game, created by the one and only [theredditbandit](https://github.com/theredditbandit). His repository link can be found here: [py-pong]([https://github.com/theredditbandit/py-pong]) 
+This game is based on the original Py-Pong game, created by the one and only [theredditbandit](https://github.com/theredditbandit). His repository link can be found here: https://github.com/theredditbandit/py-pong 
