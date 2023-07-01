@@ -6,7 +6,7 @@ This is a fork of the Py-Pong game by [theredditbandit](https://github.com/there
 
 1. Clone the repository to your local machine.
    ```shell
-   git clone <repository-url>
+   git clone https://github.com/theredditbandit/py-pong 
    ```
 
 2. Make sure you have Python installed.
