@@ -36,6 +36,11 @@ The following updates have been made to fix the biggest bugs in the game:
 
 - Fixed an issue where the ball would bounce out of the left goal instead of scoring a point.
 - Addressed an infinite scoring bug that allowed the left player to gain infinite points by scoring once in the right side.
+- Added dynamic window size functionality to make the game window resizable.
+- Improved paddle movement responsiveness and added speed control.
+- Enhanced collision detection between the ball and paddles.
+- Updated the scoring system and added a game over screen.
+
 
 ## Credits
 
