@@ -145,7 +145,6 @@ def main(play_against_bot, max_score):
             handle_paddle_movement(keys, left_paddle, right_paddle)
 
             if play_against_bot:
-                # Bot logic goes here
                 if ball.y < right_paddle.y + right_paddle.height / 2:
                     if right_paddle.y - right_paddle.VEL >= 0:
                         right_paddle.move(up=True)
