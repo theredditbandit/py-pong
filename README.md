@@ -24,7 +24,6 @@ python solution.py
 ```
 
 ## Gameplay
-
 - Use the **W** and **S** keys to move the left paddle up and down, respectively.
 - Use the **Up Arrow** and **Down Arrow** keys to move the right paddle up and down, respectively.
 
