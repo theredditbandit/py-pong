@@ -8,11 +8,11 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
 FPS = 60
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+BLACK = (0, 0, 0)   
 PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
 BALL_RADIUS = 7
 SCORE_FONT = pygame.font.SysFont("comicsans", 50)
-MAX_SCORE = 10
+
 
 class Paddle:
     COLOUR = WHITE
@@ -121,7 +121,7 @@ def show_game_over_screen(winner):
         pygame.display.update()
 
 
-def main():
+def main(play_against_bot, max_score):
     run = True
     clock = pygame.time.Clock()
     left_paddle = Paddle(10, HEIGHT // 2 - PADDLE_HEIGHT // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
@@ -145,9 +145,18 @@ def main():
             handle_collision(ball, left_paddle, right_paddle)
             handle_paddle_movement(keys, left_paddle, right_paddle)
 
+            if play_against_bot:
+                # Bot logic goes here
+                if ball.y < right_paddle.y + right_paddle.height / 2:
+                    if right_paddle.y - right_paddle.VEL >= 0:
+                        right_paddle.move(up=True)
+                else:
+                    if right_paddle.y + right_paddle.height + right_paddle.VEL <= HEIGHT:
+                        right_paddle.move(up=False)
+
             if ball.x + ball.radius >= WIDTH:
                 left_score += 1
-                if left_score >= MAX_SCORE:
+                if left_score >= max_score:
                     game_over = True
                     winner = "Player 1"
                 else:
@@ -156,7 +165,7 @@ def main():
 
             elif ball.x - ball.radius <= 0:
                 right_score += 1
-                if right_score >= MAX_SCORE:
+                if right_score >= max_score:
                     game_over = True
                     winner = "Player 2"
                 else:
@@ -172,4 +181,12 @@ def main():
     pygame.quit()
 
 
+
+if __name__ == "__main__":
+    play_against_bot = input("Do you want to play against a bot? (yes/no): ").lower() == "yes"
+    max_score = int(input("Enter the maximum score: "))
+    main(play_against_bot, max_score)
+
+
 main()
+
