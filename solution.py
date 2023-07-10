@@ -10,8 +10,9 @@ FPS = 60
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)   
 PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
-BALL_RADIUS = 3
+BALL_RADIUS = 7
 SCORE_FONT = pygame.font.SysFont("comicsans", 50)
+
 
 class Paddle:
     COLOUR = WHITE
@@ -145,6 +146,7 @@ def main(play_against_bot, max_score):
             handle_paddle_movement(keys, left_paddle, right_paddle)
 
             if play_against_bot:
+                # Bot logic goes here
                 if ball.y < right_paddle.y + right_paddle.height / 2:
                     if right_paddle.y - right_paddle.VEL >= 0:
                         right_paddle.move(up=True)
