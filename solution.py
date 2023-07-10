@@ -8,11 +8,14 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
 FPS = 60
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)   
+BLACK = (0, 0, 0)
 PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
 BALL_RADIUS = 7
 SCORE_FONT = pygame.font.SysFont("comicsans", 50)
 
+MENU_FONT = pygame.font.SysFont("comicsans", 40)
+MENU_ITEM_HEIGHT = 60
+MENU_ITEM_MARGIN = 20
 
 class Paddle:
     COLOUR = WHITE
@@ -121,6 +124,106 @@ def show_game_over_screen(winner):
         pygame.display.update()
 
 
+def show_menu():
+    selected_item = 0
+    menu_items = ["Play against bot", "Play against player", "Exit"]
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    selected_item = (selected_item - 1) % len(menu_items)
+                elif event.key == pygame.K_DOWN:
+                    selected_item = (selected_item + 1) % len(menu_items)
+                elif event.key == pygame.K_RETURN:
+                    if selected_item == 0:
+                        play_against_bot = True
+                        max_score = show_score_menu()
+                        main(play_against_bot, max_score)
+                    elif selected_item == 1:
+                        play_against_bot = False
+                        max_score = show_score_menu()
+                        main(play_against_bot, max_score)
+                    else:
+                        pygame.quit()
+                        return
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                for i, item in enumerate(menu_items):
+                    item_rect = MENU_FONT.render(item, True, WHITE).get_rect(center=(WIDTH // 2, HEIGHT // 2 + (i - len(menu_items) // 2) * (MENU_ITEM_HEIGHT + MENU_ITEM_MARGIN)))
+                    if item_rect.collidepoint(mouse_pos):
+                        if i == 0:
+                            play_against_bot = True
+                            max_score = show_score_menu()
+                            main(play_against_bot, max_score)
+                        elif i == 1:
+                            play_against_bot = False
+                            max_score = show_score_menu()
+                            main(play_against_bot, max_score)
+                        else:
+                            pygame.quit()
+                            return
+
+        WIN.fill(BLACK)
+        for i, item in enumerate(menu_items):
+            if i == selected_item:
+                text = MENU_FONT.render(item, True, WHITE)
+            else:
+                text = MENU_FONT.render(item, True, WHITE)
+            text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + (i - len(menu_items) // 2) * (MENU_ITEM_HEIGHT + MENU_ITEM_MARGIN)))
+            WIN.blit(text, text_rect)
+
+        pygame.display.update()
+
+
+def show_score_menu():
+    selected_item = 0
+    menu_items = ["3", "5", "11", "Back"]
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    selected_item = (selected_item - 1) % len(menu_items)
+                elif event.key == pygame.K_DOWN:
+                    selected_item = (selected_item + 1) % len(menu_items)
+                elif event.key == pygame.K_RETURN:
+                    if selected_item == len(menu_items) - 1:
+                        return show_menu()
+                    else:
+                        return int(menu_items[selected_item])
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                for i, item in enumerate(menu_items):
+                    item_rect = MENU_FONT.render(item, True, WHITE).get_rect(center=(WIDTH // 2, HEIGHT // 2 + (i - len(menu_items) // 2) * (MENU_ITEM_HEIGHT + MENU_ITEM_MARGIN)))
+                    if item_rect.collidepoint(mouse_pos):
+                        if i == len(menu_items) - 1:
+                            return show_menu()
+                        else:
+                            return int(menu_items[i])
+
+        WIN.fill(BLACK)
+        for i, item in enumerate(menu_items):
+            if i == selected_item:
+                text = MENU_FONT.render(item, True, WHITE)
+            else:
+                text = MENU_FONT.render(item, True, WHITE)
+            text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + (i - len(menu_items) // 2) * (MENU_ITEM_HEIGHT + MENU_ITEM_MARGIN)))
+            WIN.blit(text, text_rect)
+
+        pygame.display.update()
+
+
 def main(play_against_bot, max_score):
     run = True
     clock = pygame.time.Clock()
@@ -146,7 +249,6 @@ def main(play_against_bot, max_score):
             handle_paddle_movement(keys, left_paddle, right_paddle)
 
             if play_against_bot:
-                # Bot logic goes here
                 if ball.y < right_paddle.y + right_paddle.height / 2:
                     if right_paddle.y - right_paddle.VEL >= 0:
                         right_paddle.move(up=True)
@@ -181,12 +283,5 @@ def main(play_against_bot, max_score):
     pygame.quit()
 
 
-
 if __name__ == "__main__":
-    play_against_bot = input("Do you want to play against a bot? (yes/no): ").lower() == "yes"
-    max_score = int(input("Enter the maximum score: "))
-    main(play_against_bot, max_score)
-
-
-main()
-
+    show_menu()
